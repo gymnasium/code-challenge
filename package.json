@@ -2,7 +2,7 @@
   "name": "code-challenge",
   "version": "0.1.0",
   "engines": {
-    "node": "8.10.0",
+    "node": "8.10.0"
   },
   "dependencies": {
     "codemirror": "^5.40.0",
