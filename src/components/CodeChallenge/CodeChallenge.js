@@ -46,10 +46,11 @@ class CodeChallenge extends Component {
             }}
             onBeforeChange={this.handleOnBeforeChange}
             onChange={this.handleOnChange}
-        />
+          />
           <iframe
             srcDoc={code}
             style={styles.iFrame}
+            title="code-challenge"
           />
         </div>
       </React.Fragment>
@@ -57,26 +58,29 @@ class CodeChallenge extends Component {
   }
 }
 
+CodeChallenge.defaultProps = {
+  code: null,
+  codeUpdated: () => null,
+};
+
 CodeChallenge.propTypes = {
   code: PropTypes.string,
 
   codeUpdated: PropTypes.func,
-}
+};
 
 const mapStateToProps = (state, ownProps) => {
   const { codeChallenge } = state;
   return {
     code: codeChallenge.code,
-  }
-}
+  };
+};
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    codeUpdated: (code) => {
-      dispatch(CodeChallengeActions.codeUpdated(code));
-    }
-  }
-}
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  codeUpdated: (code) => {
+    dispatch(CodeChallengeActions.codeUpdated(code));
+  },
+});
 
 export default connect(
   mapStateToProps,
