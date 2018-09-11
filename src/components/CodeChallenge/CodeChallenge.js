@@ -12,7 +12,7 @@ class CodeChallenge extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: '<h1>I ♥ react-codemirror2</h1>',
+      code: '<h1>I ♥ Gymnasium</h1>',
     };
   }
 
@@ -52,7 +52,7 @@ class CodeChallenge extends Component {
             }}
             onBeforeChange={this.handleOnBeforeChange}
             onChange={this.hanleOnChange}
-          />
+        />
           <iframe
             srcDoc={code}
             style={styles.iFrame}
