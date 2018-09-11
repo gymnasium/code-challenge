@@ -1,33 +1,27 @@
 import React, { Component } from 'react';
-
-import './CodeChallenge.css';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import { Controlled as CodeMirror } from 'react-codemirror2';
+import * as CodeChallengeActions from '../../store/CodeChallenge/actions';
+
+import './CodeChallenge.css';
 
 require('codemirror/mode/xml/xml');
 require('codemirror/mode/javascript/javascript');
 
-
 class CodeChallenge extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      code: '<h1>I ♥ Gymnasium</h1>',
-    };
-  }
-
   handleOnBeforeChange = (editor, data, value) => {
-    this.setState({
-      code: value,
-    });
+    const { codeUpdated } = this.props;
+
+    codeUpdated(value);
   }
 
-  hanleOnChange = (editor, data, value) => {
-    console.log(editor, data, value);
+  handleOnChange = (editor, data, value) => {
   }
 
   render() {
-    const { code } = this.state;
+    const { code } = this.props;
 
     const styles = {
       container: {
@@ -51,7 +45,7 @@ class CodeChallenge extends Component {
               lineNumbers: true,
             }}
             onBeforeChange={this.handleOnBeforeChange}
-            onChange={this.hanleOnChange}
+            onChange={this.handleOnChange}
         />
           <iframe
             srcDoc={code}
@@ -63,4 +57,28 @@ class CodeChallenge extends Component {
   }
 }
 
-export default CodeChallenge;
+CodeChallenge.propTypes = {
+  code: PropTypes.string,
+
+  codeUpdated: PropTypes.func,
+}
+
+const mapStateToProps = (state, ownProps) => {
+  const { codeChallenge } = state;
+  return {
+    code: codeChallenge.code,
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    codeUpdated: (code) => {
+      dispatch(CodeChallengeActions.codeUpdated(code));
+    }
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CodeChallenge);
