@@ -1,7 +1,9 @@
 {
   "name": "code-challenge",
   "version": "0.1.0",
-  "private": true,
+  "engines": {
+    "node": "8.10.0",
+  },
   "dependencies": {
     "codemirror": "^5.40.0",
     "prop-types": "^15.6.2",
