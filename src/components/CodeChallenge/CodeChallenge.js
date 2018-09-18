@@ -2,8 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { debounce } from 'lodash';
-
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import * as CodeChallengeActions from '../../store/CodeChallenge/actions';
 
