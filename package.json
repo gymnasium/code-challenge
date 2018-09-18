@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "codemirror": "^5.40.0",
+    "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
     "react": "^16.5.0",
     "react-codemirror2": "^5.1.0",
