@@ -1,7 +1,7 @@
 import * as types from './types';
 
 const initialState = {
-  code: '<h1>I ❤️ Gymnasium</h1>',
+  code: '<h1>I ❤ Gymnasium</h1>',
 };
 
 const CodeChallenge = (state = initialState, action) => {
