@@ -18,14 +18,13 @@ const store = createStore(
 
 const App = () => (
   <Provider store={store}>
-    <div className="App">
-      <header className="App-header">
-        <h1 className="App-title">Code Challenge</h1>
-      </header>
-      <main>
-        <CodeChallenge />
-      </main>
-    </div>
+    <main className="App">
+      <CodeChallenge
+        questionNumber={1}
+        prompt={'Create a paragraph that says "hello, world"'}
+        goalCode="<p>hello, world</p>"
+      />
+    </main>
   </Provider>
 );
 

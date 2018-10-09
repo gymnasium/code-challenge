@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -10,21 +10,57 @@ import './CodeChallenge.css';
 require('codemirror/mode/xml/xml');
 require('codemirror/mode/javascript/javascript');
 
-class CodeChallenge extends Component {
-  handleOnBeforeChange = (editor, data, value) => {
-    const { codeUpdated } = this.props;
+class CodeChallenge extends PureComponent {
+  constructor(props) {
+    super(props);
 
-    codeUpdated(value);
+    const { code } = this.props;
+    this.state = {
+      inputCode: code,
+    };
   }
 
-  handleOnChange = (editor, data, value) => {
+  handleOnBeforeChange = (editor, data, codeFromEditor) => {
+    this.setState({
+      inputCode: codeFromEditor,
+    });
+  }
+
+  handleOnChange = (editor, data, codeFromEditor) => {
+    const { codeUpdated } = this.props;
+    codeUpdated(codeFromEditor);
   }
 
   render() {
-    const { code } = this.props;
+    const {
+      code,
+      prompt,
+      goalCode,
+      questionNumber,
+    } = this.props;
+
+    const { inputCode } = this.state;
 
     const styles = {
-      container: {
+      codeContainer: {
+        display: 'grid',
+        gridTemplateRows: '30% 70%',
+        gridTemplateColumns: '50% 50%',
+      },
+      codeMirror: {
+        gridColumnStart: 1,
+        gridRowStart: 2,
+      },
+      goalDisplay: {
+        gridColumnStart: 1,
+        gridColumnEnd: 2,
+        gridRowStart: 1,
+        border: '1px solid #444',
+      },
+      iFrameContainer: {
+        border: '1px solid #444',
+        gridColumnStart: 2,
+        gridRowStart: 2,
       },
       iFrame: {
         border: 'none',
@@ -32,26 +68,61 @@ class CodeChallenge extends Component {
         padding: 0,
         width: '100%',
       },
+      prompt: {
+        fontSize: '1.5rem',
+      },
+      promptContainer: {
+        margin: '1.5rem 0',
+      },
+      questionNumber: {
+        fontWeight: '900',
+        margin: '0 1rem',
+        color: '#777',
+      },
     };
 
     return (
       <React.Fragment>
         <div style={styles.container}>
-          <CodeMirror
-            value={code}
-            options={{
-              mode: 'xml',
-              theme: 'material',
-              lineNumbers: true,
-            }}
-            onBeforeChange={this.handleOnBeforeChange}
-            onChange={this.handleOnChange}
-          />
-          <iframe
-            srcDoc={code}
-            style={styles.iFrame}
-            title="code-challenge"
-          />
+          <div style={styles.promptContainer}>
+            <span style={styles.questionNumber}>
+              {questionNumber}
+            </span>
+            <span style={styles.prompt}>
+              {prompt}
+            </span>
+          </div>
+          {goalCode && (
+            <div style={styles.goalDisplay}>
+              <iframe
+                srcDoc={goalCode}
+                style={styles.iFrame}
+                title="goal-code"
+              />
+            </div>
+          )}
+          <div style={styles.codeContainer}>
+            <div style={styles.codeMirror}>
+              <CodeMirror
+                value={inputCode}
+                options={{
+                  mode: 'xml',
+                  theme: 'material',
+                  lineNumbers: true,
+                  viewportMargin: 50,
+                }}
+                onBeforeChange={this.handleOnBeforeChange}
+                onChange={this.handleOnChange}
+              />
+            </div>
+            <div style={styles.iFrameContainer}>
+              <iframe
+                srcDoc={code}
+                style={styles.iFrame}
+                title="code-challenge"
+              />
+            </div>
+          </div>
         </div>
       </React.Fragment>
     );
@@ -61,11 +132,17 @@ class CodeChallenge extends Component {
 CodeChallenge.defaultProps = {
   code: null,
   codeUpdated: () => null,
+  goalCode: null,
+  prompt: '',
+  questionNumber: null,
 };
 
 CodeChallenge.propTypes = {
-  code: PropTypes.string,
+  goalCode: PropTypes.string, // the "correct" answer/approach as html, as input by the platform
+  prompt: PropTypes.node, // the guidelines for this challenge.  The question text
+  questionNumber: PropTypes.number,
 
+  code: PropTypes.string,
   codeUpdated: PropTypes.func,
 };
 
