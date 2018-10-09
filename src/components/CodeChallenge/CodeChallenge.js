@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import * as CodeChallengeActions from '../../store/CodeChallenge/actions';
 
+import styles from './CodeChallenge.module.css';
 import './CodeChallenge.css';
 
 require('codemirror/mode/xml/xml');
@@ -17,6 +18,7 @@ class CodeChallenge extends PureComponent {
     const { code } = this.props;
     this.state = {
       inputCode: code,
+      isGrading: false,
     };
   }
 
@@ -31,6 +33,26 @@ class CodeChallenge extends PureComponent {
     codeUpdated(codeFromEditor);
   }
 
+  handleSubmitForGrading = () => {
+    const { submitForGrading } = this.props;
+
+    this.setIsGrading(true);
+  
+    submitForGrading();
+
+    // just a dummy timeout
+    setTimeout(
+      this.setIsGrading,
+      3000,
+    );
+  }
+
+  setIsGrading = (isGrading = false) => {
+    this.setState({
+      isGrading,
+    });
+  }
+
   render() {
     const {
       code,
@@ -39,70 +61,33 @@ class CodeChallenge extends PureComponent {
       questionNumber,
     } = this.props;
 
-    const { inputCode } = this.state;
-
-    const styles = {
-      codeContainer: {
-        display: 'grid',
-        gridTemplateRows: '30% 70%',
-        gridTemplateColumns: '50% 50%',
-      },
-      codeMirror: {
-        gridColumnStart: 1,
-        gridRowStart: 2,
-      },
-      goalDisplay: {
-        gridColumnStart: 1,
-        gridColumnEnd: 2,
-        gridRowStart: 1,
-        border: '1px solid #444',
-      },
-      iFrameContainer: {
-        border: '1px solid #444',
-        gridColumnStart: 2,
-        gridRowStart: 2,
-      },
-      iFrame: {
-        border: 'none',
-        margin: 0,
-        padding: 0,
-        width: '100%',
-      },
-      prompt: {
-        fontSize: '1.5rem',
-      },
-      promptContainer: {
-        margin: '1.5rem 0',
-      },
-      questionNumber: {
-        fontWeight: '900',
-        margin: '0 1rem',
-        color: '#777',
-      },
-    };
+    const {
+      isGrading,
+      inputCode,
+    } = this.state;
 
     return (
       <React.Fragment>
-        <div style={styles.container}>
-          <div style={styles.promptContainer}>
-            <span style={styles.questionNumber}>
+        <div className={styles.container}>
+          <div className={styles.promptContainer}>
+            <span className={styles.questionNumber}>
               {questionNumber}
             </span>
-            <span style={styles.prompt}>
+            <span className={styles.prompt}>
               {prompt}
             </span>
           </div>
           {goalCode && (
-            <div style={styles.goalDisplay}>
+            <div className={styles.goalDisplay}>
               <iframe
                 srcDoc={goalCode}
-                style={styles.iFrame}
+                className={styles.iFrame}
                 title="goal-code"
               />
             </div>
           )}
-          <div style={styles.codeContainer}>
-            <div style={styles.codeMirror}>
+          <div className={styles.codeContainer}>
+            <div className={styles.codeMirror}>
               <CodeMirror
                 value={inputCode}
                 options={{
@@ -115,14 +100,22 @@ class CodeChallenge extends PureComponent {
                 onChange={this.handleOnChange}
               />
             </div>
-            <div style={styles.iFrameContainer}>
+            <div className={styles.iFrameContainer}>
               <iframe
                 srcDoc={code}
-                style={styles.iFrame}
+                className={styles.iFrame}
                 title="code-challenge"
               />
             </div>
           </div>
+          <button
+            type="button"
+            onClick={this.handleSubmitForGrading}
+            disabled={isGrading}
+            className={styles.submit}
+          >
+            Submit
+          </button>
         </div>
       </React.Fragment>
     );
@@ -131,7 +124,6 @@ class CodeChallenge extends PureComponent {
 
 CodeChallenge.defaultProps = {
   code: null,
-  codeUpdated: () => null,
   goalCode: null,
   prompt: '',
   questionNumber: null,
@@ -143,7 +135,8 @@ CodeChallenge.propTypes = {
   questionNumber: PropTypes.number,
 
   code: PropTypes.string,
-  codeUpdated: PropTypes.func,
+  codeUpdated: PropTypes.func.isRequired,
+  submitForGrading: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -156,6 +149,9 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   codeUpdated: (code) => {
     dispatch(CodeChallengeActions.codeUpdated(code));
+  },
+  submitForGrading: () => {
+    dispatch(CodeChallengeActions.gradeProblem());
   },
 });
 
