@@ -1,4 +1,7 @@
 # To do
+1. Persist state so it isn't lost on page refresh
+    - [ ] add redux-persist
+1. add a button to `submit` for grading
 1. Optionally render correct output at the top of the problem if it is provided (via `goalCode` prop).
 1. Compare `inputCode` to `goalCode` to see if they are identical.
     - [ ] don't forget to trim whitespace
@@ -8,9 +11,6 @@
     - [ ] compare output graphically
     - [ ] compare output analytically
 1. Come up with a grading rubric for partial credit, maybe
-1. Persist state so it isn't lost on page refresh
-    - [ ] add redux-persist
-1. add a button to `submit` for gradint
 1. generate a grade report
 1. output grade report as an event of some sort
 1. chain code challenges together somehow
