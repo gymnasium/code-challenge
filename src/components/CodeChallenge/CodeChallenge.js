@@ -11,26 +11,26 @@ import './CodeChallenge.css';
 require('codemirror/mode/xml/xml');
 require('codemirror/mode/javascript/javascript');
 
-class CodeChallenge extends PureComponent {
-  constructor(props) {
-    super(props);
+const initialState = {
+  isGrading: false,
+};
 
-    const { code } = this.props;
-    this.state = {
-      inputCode: code,
-      isGrading: false,
-    };
-  }
+class CodeChallenge extends PureComponent {
+  state = initialState;
 
   handleOnBeforeChange = (editor, data, codeFromEditor) => {
-    this.setState({
-      inputCode: codeFromEditor,
-    });
-  }
-
-  handleOnChange = (editor, data, codeFromEditor) => {
     const { codeUpdated } = this.props;
     codeUpdated(codeFromEditor);
+  }
+
+  handleResetChallenge = () => {
+    const { resetChallenge } = this.props;
+
+    // reset the loading and grading states locally
+    this.setState(initialState, () => {
+      // reset code and grade in redux
+      resetChallenge();
+    });
   }
 
   handleSubmitForGrading = () => {
@@ -55,7 +55,8 @@ class CodeChallenge extends PureComponent {
 
   render() {
     const {
-      code,
+      userInputCode,
+      grade,
       prompt,
       goalCode,
       questionNumber,
@@ -63,7 +64,6 @@ class CodeChallenge extends PureComponent {
 
     const {
       isGrading,
-      inputCode,
     } = this.state;
 
     return (
@@ -77,6 +77,15 @@ class CodeChallenge extends PureComponent {
               {prompt}
             </span>
           </div>
+          {grade && !isGrading && (
+            <h1>
+              {`You scored ${grade}`}
+              {grade > 85 ? '! 🎉' : '.'}
+            </h1>
+          )}
+          {isGrading && (
+            <h1>Grading...</h1>
+          )}
           {goalCode && (
             <div className={styles.goalDisplay}>
               <iframe
@@ -89,7 +98,7 @@ class CodeChallenge extends PureComponent {
           <div className={styles.codeContainer}>
             <div className={styles.codeMirror}>
               <CodeMirror
-                value={inputCode}
+                value={userInputCode}
                 options={{
                   mode: 'xml',
                   theme: 'material',
@@ -102,7 +111,7 @@ class CodeChallenge extends PureComponent {
             </div>
             <div className={styles.iFrameContainer}>
               <iframe
-                srcDoc={code}
+                srcDoc={userInputCode}
                 className={styles.iFrame}
                 title="code-challenge"
               />
@@ -116,6 +125,14 @@ class CodeChallenge extends PureComponent {
           >
             Submit
           </button>
+          <button
+            type="button"
+            onClick={this.handleResetChallenge}
+            disabled={isGrading}
+            className={styles.submit}
+          >
+            Reset
+          </button>
         </div>
       </React.Fragment>
     );
@@ -124,6 +141,7 @@ class CodeChallenge extends PureComponent {
 
 CodeChallenge.defaultProps = {
   code: null,
+  grade: undefined,
   goalCode: null,
   prompt: '',
   questionNumber: null,
@@ -131,29 +149,45 @@ CodeChallenge.defaultProps = {
 
 CodeChallenge.propTypes = {
   goalCode: PropTypes.string, // the "correct" answer/approach as html, as input by the platform
+  grade: PropTypes.number, // this is their grade for this assessment, if the problem has been graded already
   prompt: PropTypes.node, // the guidelines for this challenge.  The question text
   questionNumber: PropTypes.number,
 
   code: PropTypes.string,
   codeUpdated: PropTypes.func.isRequired,
+  resetChallenge: PropTypes.func.isRequired,
   submitForGrading: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
   const { codeChallenge } = state;
+
+  const {
+    userInputCode,
+    grade,
+  } = codeChallenge;
+
   return {
-    code: codeChallenge.code,
+    userInputCode,
+    grade,
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  codeUpdated: (code) => {
-    dispatch(CodeChallengeActions.codeUpdated(code));
-  },
-  submitForGrading: () => {
-    dispatch(CodeChallengeActions.gradeProblem());
-  },
-});
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { goalCode } = ownProps;
+
+  return {
+    codeUpdated: (code) => {
+      dispatch(CodeChallengeActions.codeUpdated(code));
+    },
+    resetChallenge: () => {
+      dispatch(CodeChallengeActions.resetChallenge());
+    },
+    submitForGrading: () => {
+      dispatch(CodeChallengeActions.gradeProblem(goalCode));
+    },
+  };
+};
 
 export default connect(
   mapStateToProps,
