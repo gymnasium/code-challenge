@@ -1,7 +1,8 @@
 import * as types from './types';
 
 const initialState = {
-  code: '<h1>I ❤ Gymnasium</h1>',
+  userInputCode: '<h1>I ❤ Gymnasium</h1>',
+  grade: undefined,
 };
 
 const CodeChallenge = (state = initialState, action) => {
@@ -9,8 +10,19 @@ const CodeChallenge = (state = initialState, action) => {
     case types.CODE_UPDATED:
       return {
         ...state,
-        code: action.code,
+        userInputCode: action.code,
       };
+
+    case types.PROBLEM_GRADED: {
+      return {
+        ...state,
+        grade: action.grade,
+      };
+    }
+
+    case types.RESET_CHALLENGE: {
+      return initialState;
+    }
 
     default:
       return state;

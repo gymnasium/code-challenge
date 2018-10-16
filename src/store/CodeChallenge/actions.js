@@ -15,10 +15,26 @@ const notifyEndGrading = () => ({
   type: types.NOTIFY_END_GRADING,
 });
 
-export const gradeProblem = (input1, input2) => (dispatch, getState) => {
+const problemGraded = grade => ({
+  type: types.PROBLEM_GRADED,
+  grade,
+});
+
+export const resetChallenge = () => ({
+  type: types.RESET_CHALLENGE,
+});
+
+export const gradeProblem = goalCode => (dispatch, getState) => {
+  const { code } = getState().codeChallenge;
+
   dispatch(notifyBeginGrading());
+
   setTimeout(() => {
     // Yay! Can invoke sync or async actions with `dispatch`
     dispatch(notifyEndGrading());
+
+    if (goalCode === code) {
+      dispatch(problemGraded(100));
+    }
   }, 1000);
 };
