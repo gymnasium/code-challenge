@@ -37,7 +37,7 @@ class CodeChallenge extends PureComponent {
     const { submitForGrading } = this.props;
 
     this.setIsGrading(true);
-  
+
     submitForGrading();
 
     // just a dummy timeout
