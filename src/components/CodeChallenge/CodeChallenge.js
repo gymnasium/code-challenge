@@ -140,7 +140,7 @@ class CodeChallenge extends PureComponent {
 }
 
 CodeChallenge.defaultProps = {
-  code: null,
+  userInputCode: null,
   grade: undefined,
   goalCode: null,
   prompt: '',
@@ -153,7 +153,7 @@ CodeChallenge.propTypes = {
   prompt: PropTypes.node, // the guidelines for this challenge.  The question text
   questionNumber: PropTypes.number,
 
-  code: PropTypes.string,
+  userInputCode: PropTypes.string,
   codeUpdated: PropTypes.func.isRequired,
   resetChallenge: PropTypes.func.isRequired,
   submitForGrading: PropTypes.func.isRequired,
