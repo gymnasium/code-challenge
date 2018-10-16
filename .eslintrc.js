@@ -16,6 +16,7 @@ module.exports = {
         ],
         "jsx-a11y/href-no-hash": [0],
         "react/jsx-filename-extension" : 0,
+        "max-len": [0],
     },
     "env": {
         "browser": true,
