@@ -1,0 +1,48 @@
+.submit {
+  padding: 1rem;
+}
+
+.codeContainer {
+  display: grid;
+  grid-template-rows: 30% 70%;
+  grid-template-columns: 50% 50%;
+}
+
+.codeMirror {
+  grid-column-start: 1;
+  grid-row-start: 2;
+}
+
+.goalDisplay {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  border: 1px solid #444;
+}
+
+.iFrameContainer {
+  border: 1px solid #444;
+  grid-column-start: 2;
+  grid-row-start: 2;
+}
+
+.iFrame {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.prompt {
+  font-size: 1.5rem;
+}
+
+.promptContainer {
+  margin: 1.5rem 0;
+}
+
+.questionNumber {
+  font-weight: 900;
+  margin: 0 1rem;
+  color: #777;
+}
