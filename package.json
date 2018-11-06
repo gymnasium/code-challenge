@@ -2,18 +2,18 @@
   "name": "code-challenge",
   "version": "0.1.0",
   "engines": {
-    "node": "8.10.0"
+    "node": "^8.10.0"
   },
   "dependencies": {
-    "codemirror": "^5.40.2",
+    "codemirror": "^5.41.0",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
-    "react": "^16.5.2",
+    "react": "^16.6.0",
     "react-codemirror2": "^5.1.0",
-    "react-dom": "^16.5.2",
-    "react-redux": "^5.0.7",
-    "react-scripts": "2.0.4",
-    "redux": "^4.0.0",
+    "react-dom": "^16.6.0",
+    "react-redux": "^5.1.0",
+    "react-scripts": "2.1.1",
+    "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.10.0",
     "redux-responsive": "^4.3.8",
@@ -28,8 +28,8 @@
   },
   "devDependencies": {
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-react-app": "^3.0.3",
-    "eslint-plugin-flowtype": "^2.50.3",
+    "eslint-config-react-app": "^3.0.5",
+    "eslint-plugin-flowtype": "^3.2.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1"
