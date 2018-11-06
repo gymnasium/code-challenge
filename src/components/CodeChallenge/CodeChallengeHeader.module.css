@@ -1,0 +1,19 @@
+.questionNumber {
+  font-weight: 900;
+  margin: 0 1rem;
+  color: #777;
+}
+
+.titleContainer {
+  margin: 1.5rem 0;
+}
+
+.title {
+  font-size: 1.5rem;
+}
+
+.prompt {
+  font-family: 'Courier New', courier, monospace;
+  margin-bottom: 1.5rem;
+}
+

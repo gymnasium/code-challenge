@@ -32,17 +32,3 @@
   padding: 0;
   width: 100%;
 }
-
-.prompt {
-  font-size: 1.5rem;
-}
-
-.promptContainer {
-  margin: 1.5rem 0;
-}
-
-.questionNumber {
-  font-weight: 900;
-  margin: 0 1rem;
-  color: #777;
-}

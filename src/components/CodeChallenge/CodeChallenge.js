@@ -7,6 +7,7 @@ import * as CodeChallengeActions from '../../store/CodeChallenge/actions';
 
 import styles from './CodeChallenge.module.css';
 import './CodeChallenge.css';
+import CodeChallengeHeader from './CodeChallengeHeader';
 
 require('codemirror/mode/xml/xml');
 require('codemirror/mode/javascript/javascript');
@@ -60,6 +61,7 @@ class CodeChallenge extends PureComponent {
       prompt,
       goalCode,
       questionNumber,
+      title,
     } = this.props;
 
     const {
@@ -67,74 +69,62 @@ class CodeChallenge extends PureComponent {
     } = this.state;
 
     return (
-      <React.Fragment>
-        <div className={styles.container}>
-          <div className={styles.promptContainer}>
-            <span className={styles.questionNumber}>
-              {questionNumber}
-            </span>
-            <span className={styles.prompt}>
-              {prompt}
-            </span>
+      <div className={styles.container}>
+        <CodeChallengeHeader
+          grade={grade}
+          isGrading={isGrading}
+          questionNumber={questionNumber}
+          prompt={prompt}
+          title={title}
+        />
+        {goalCode && (
+          <div className={styles.goalDisplay}>
+            <iframe
+              srcDoc={goalCode}
+              className={styles.iFrame}
+              title="goal-code"
+            />
           </div>
-          {grade && !isGrading && (
-            <h1>
-              {`You scored ${grade}`}
-              {grade > 85 ? '! 🎉' : '.'}
-            </h1>
-          )}
-          {isGrading && (
-            <h1>Grading...</h1>
-          )}
-          {goalCode && (
-            <div className={styles.goalDisplay}>
-              <iframe
-                srcDoc={goalCode}
-                className={styles.iFrame}
-                title="goal-code"
-              />
-            </div>
-          )}
-          <div className={styles.codeContainer}>
-            <div className={styles.codeMirror}>
-              <CodeMirror
-                value={userInputCode}
-                options={{
-                  mode: 'xml',
-                  theme: 'material',
-                  lineNumbers: true,
-                  viewportMargin: 50,
-                }}
-                onBeforeChange={this.handleOnBeforeChange}
-                onChange={this.handleOnChange}
-              />
-            </div>
-            <div className={styles.iFrameContainer}>
-              <iframe
-                srcDoc={userInputCode}
-                className={styles.iFrame}
-                title="code-challenge"
-              />
-            </div>
+        )}
+        <div className={styles.codeContainer}>
+          <div className={styles.codeMirror}>
+            <CodeMirror
+              value={userInputCode}
+              options={{
+                mode: 'xml',
+                theme: 'material',
+                lineNumbers: true,
+                viewportMargin: 50,
+              }}
+              onBeforeChange={this.handleOnBeforeChange}
+              onChange={this.handleOnChange}
+            />
           </div>
-          <button
-            type="button"
-            onClick={this.handleSubmitForGrading}
-            disabled={isGrading}
-            className={styles.submit}
-          >
-            Submit
-          </button>
-          <button
-            type="button"
-            onClick={this.handleResetChallenge}
-            disabled={isGrading}
-            className={styles.submit}
-          >
-            Reset
-          </button>
+          <div className={styles.iFrameContainer}>
+            <iframe
+              srcDoc={userInputCode}
+              className={styles.iFrame}
+              title="code-challenge"
+            />
+          </div>
         </div>
-      </React.Fragment>
+        <button
+          type="button"
+          onClick={this.handleSubmitForGrading}
+          disabled={isGrading}
+          className={styles.submit}
+        >
+          Submit
+        </button>
+        <button
+          type="button"
+          onClick={this.handleResetChallenge}
+          disabled={isGrading}
+          className={styles.submit}
+        >
+          Reset
+        </button>
+      </div>
     );
   }
 }
@@ -144,6 +134,7 @@ CodeChallenge.defaultProps = {
   grade: undefined,
   goalCode: null,
   prompt: '',
+  title: 'Loading',
   questionNumber: null,
 };
 
@@ -151,6 +142,7 @@ CodeChallenge.propTypes = {
   goalCode: PropTypes.string, // the "correct" answer/approach as html, as input by the platform
   grade: PropTypes.number, // this is their grade for this assessment, if the problem has been graded already
   prompt: PropTypes.node, // the guidelines for this challenge.  The question text
+  title: PropTypes.string, // the title of this problem
   questionNumber: PropTypes.number,
 
   userInputCode: PropTypes.string,
