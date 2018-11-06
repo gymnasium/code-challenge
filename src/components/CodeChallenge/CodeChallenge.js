@@ -61,6 +61,7 @@ class CodeChallenge extends PureComponent {
       prompt,
       goalCode,
       questionNumber,
+      title,
     } = this.props;
 
     const {
@@ -74,6 +75,7 @@ class CodeChallenge extends PureComponent {
           isGrading={isGrading}
           questionNumber={questionNumber}
           prompt={prompt}
+          title={title}
         />
         {goalCode && (
           <div className={styles.goalDisplay}>
@@ -132,6 +134,7 @@ CodeChallenge.defaultProps = {
   grade: undefined,
   goalCode: null,
   prompt: '',
+  title: 'Loading',
   questionNumber: null,
 };
 
@@ -139,6 +142,7 @@ CodeChallenge.propTypes = {
   goalCode: PropTypes.string, // the "correct" answer/approach as html, as input by the platform
   grade: PropTypes.number, // this is their grade for this assessment, if the problem has been graded already
   prompt: PropTypes.node, // the guidelines for this challenge.  The question text
+  title: PropTypes.string, // the title of this problem
   questionNumber: PropTypes.number,
 
   userInputCode: PropTypes.string,

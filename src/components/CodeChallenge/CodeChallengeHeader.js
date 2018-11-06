@@ -9,27 +9,33 @@ const CodeChallengeHeader = (props) => {
     isGrading,
     prompt,
     questionNumber,
+    title,
   } = props;
 
   return (
     <React.Fragment>
-      <div className={styles.promptContainer}>
+      <header className={styles.titleContainer}>
         <span className={styles.questionNumber}>
           {questionNumber}
         </span>
-        <span className={styles.prompt}>
-          {prompt}
+        <span className={styles.title}>
+          {title}
         </span>
+      </header>
+      <div className={styles.prompt}>
+        {prompt}
       </div>
-      {grade && !isGrading && (
-        <h1>
-          {`You scored ${grade}`}
-          {grade > 85 ? '! 🎉' : '.'}
-        </h1>
-      )}
-      {isGrading && (
-        <h1>Grading...</h1>
-      )}
+      <div>
+        {grade && !isGrading && (
+          <h1>
+            {`You scored ${grade}`}
+            {grade > 85 ? '! 🎉' : '.'}
+          </h1>
+        )}
+        {isGrading && (
+          <h1>Grading...</h1>
+        )}
+      </div>
     </React.Fragment>
   );
 };
@@ -39,13 +45,15 @@ CodeChallengeHeader.defaultProps = {
   isGrading: false,
   prompt: '',
   questionNumber: '',
+  title: '',
 };
 
 CodeChallengeHeader.propTypes = {
   grade: PropTypes.number,
   isGrading: PropTypes.bool,
-  prompt: '',
+  prompt: PropTypes.string,
   questionNumber: PropTypes.string,
+  title: PropTypes.string,
 };
 
 export default CodeChallengeHeader;

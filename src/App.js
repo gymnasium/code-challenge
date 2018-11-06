@@ -17,6 +17,7 @@ const App = () => (
       <main className="App">
         <CodeChallenge
           questionNumber={1}
+          title="Hello world!"
           prompt={'Create a paragraph that says "hello, world"'}
           goalCode="<p>hello, world</p>"
         />
