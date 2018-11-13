@@ -12,7 +12,11 @@
   "scripts": {
     "code-challenge-client": "cd client && yarn start",
     "code-challenge-server": "cd server && yarn start",
-    "start": "concurrently 'npm:code-challenge-*'"
+    "dev-client": "cd client && yarn start",
+    "dev-server": "cd server && yarn start:dev",
+
+    "start": "concurrently 'npm:code-challenge-*'",
+    "start:dev": "concurrently 'npm:dev-*'"
   },
   "dependencies": {
     "concurrently": "^4.0.1"
