@@ -14,11 +14,10 @@
     "code-challenge-server": "cd server && yarn start",
     "dev-client": "cd client && yarn start",
     "dev-server": "cd server && yarn start:dev",
-
-    "start": "concurrently 'npm:code-challenge-*'",
-    "start:dev": "concurrently 'npm:dev-*'"
+    "start": "concurrently 'yarn:code-challenge-*'",
+    "start:dev": "concurrently 'yarn:dev-*'"
   },
   "dependencies": {
-    "concurrently": "^4.0.1"
+    "concurrently": "^4.1.0"
   }
 }
