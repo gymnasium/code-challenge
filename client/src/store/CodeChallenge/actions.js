@@ -24,17 +24,22 @@ export const resetChallenge = () => ({
   type: types.RESET_CHALLENGE,
 });
 
-export const gradeProblem = goalCode => (dispatch, getState) => {
+export const gradeProblem = goalCode => async (dispatch, getState) => {
   const { code } = getState().codeChallenge;
 
   dispatch(notifyBeginGrading());
 
-  setTimeout(() => {
-    // Yay! Can invoke sync or async actions with `dispatch`
-    dispatch(notifyEndGrading());
+  try {
+    const response = await window.fetch('/api/grading/grade');
+    const body = await response.json();
+    const { grade } = body;
 
-    if (goalCode === code) {
-      dispatch(problemGraded(100));
+    if (grade) {
+      dispatch(problemGraded(grade));
     }
-  }, 1000);
+
+    dispatch(notifyEndGrading());
+  } catch (e) {
+    throw new Error(e.message || e);
+  }
 };
