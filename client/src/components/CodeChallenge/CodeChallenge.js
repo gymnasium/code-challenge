@@ -120,13 +120,6 @@ class CodeChallenge extends PureComponent {
         >
           Reset
         </button>
-        <button
-          type="button"
-          onClick={this.handleAPIRequest}
-          className={styles.submit}
-        >
-          API Request
-        </button>
       </div>
     );
   }
