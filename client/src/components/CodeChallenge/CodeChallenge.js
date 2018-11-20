@@ -160,7 +160,7 @@ CodeChallenge.propTypes = {
   grade: PropTypes.number, // this is their grade for this assessment, if the problem has been graded already
   prompt: PropTypes.node, // the guidelines for this challenge.  The question text
   title: PropTypes.string, // the title of this problem
-  questionNumber: PropTypes.number,
+  questionNumber: PropTypes.node,
 
   userInputCode: PropTypes.string,
   codeUpdated: PropTypes.func.isRequired,
