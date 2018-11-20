@@ -5,7 +5,8 @@
  */
 const calculateGrade = (req, res) => {
   res.json({
-    response: 'we calculated a grade here!',
+    message: 'You\'re the best!',
+    grade: 87,
   });
 };
 
