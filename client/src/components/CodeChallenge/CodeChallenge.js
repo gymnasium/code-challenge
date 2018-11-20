@@ -19,16 +19,6 @@ const initialState = {
 class CodeChallenge extends PureComponent {
   state = initialState;
 
-  handleAPIRequest = async () => {
-    try {
-      const response = await window.fetch('/api/grading/grade');
-      const body = await response.json();
-      console.log(body);
-    } catch (e) {
-      console.log(e.message || e);
-    }
-  }
-
   handleOnBeforeChange = (editor, data, codeFromEditor) => {
     const { codeUpdated } = this.props;
     codeUpdated(codeFromEditor);
@@ -51,11 +41,7 @@ class CodeChallenge extends PureComponent {
 
     submitForGrading();
 
-    // just a dummy timeout
-    setTimeout(
-      this.setIsGrading,
-      3000,
-    );
+    this.setIsGrading(false);
   }
 
   setIsGrading = (isGrading = false) => {
