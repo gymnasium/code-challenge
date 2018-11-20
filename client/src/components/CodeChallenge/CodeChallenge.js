@@ -21,7 +21,7 @@ class CodeChallenge extends PureComponent {
 
   handleAPIRequest = async () => {
     try {
-      const response = await window.fetch('/api/todos');
+      const response = await window.fetch('/api/grading/grade');
       const body = await response.json();
       console.log(body);
     } catch (e) {
