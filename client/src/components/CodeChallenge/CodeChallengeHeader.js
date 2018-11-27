@@ -52,7 +52,7 @@ CodeChallengeHeader.propTypes = {
   grade: PropTypes.number,
   isGrading: PropTypes.bool,
   prompt: PropTypes.string,
-  questionNumber: PropTypes.string,
+  questionNumber: PropTypes.node,
   title: PropTypes.string,
 };
 

@@ -1,0 +1,23 @@
+{
+  "engines": {
+    "node": "^8.10.0"
+  },
+  "name": "code-challenge-server",
+  "version": "1.0.0",
+  "description": "Server/api functionality for the code-challenge project",
+  "main": "index.js",
+  "author": "Mike Bifulco <mbifulco@aquent.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "start:dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.6"
+  }
+}
