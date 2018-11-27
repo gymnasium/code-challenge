@@ -7,7 +7,7 @@ const calculateGrade = (req, res) => {
   const {
     inputCode,
     goalCode,
-  } = req;
+  } = req.body;
 
   let grade = 100;
   console.dir(req.body);

@@ -38,7 +38,7 @@ export const gradeProblem = goalCode => async (dispatch, getState) => {
       method: 'post',
       body: JSON.stringify({
         inputCode: userInputCode,
-        // goalCode: '123',
+        goalCode,
       }),
 
       mode: 'cors', // no-cors, cors, *same-origin
